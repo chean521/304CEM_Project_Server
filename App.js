@@ -38,6 +38,8 @@ class Server {
     this._app.use(
       session({
         secret: '123abc',
+        resave: false,
+        saveUninitialized: false,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           ttl: 600000,
