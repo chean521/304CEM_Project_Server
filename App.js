@@ -1,4 +1,6 @@
 const Express = require('express');
+import cors from 'cors';
+import passport from 'passport';
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
@@ -30,25 +32,20 @@ class Server {
     this._app.use(Express.json());
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
+    this._app.use(cors());
     this._app.use(
       session({
         secret: '123abc',
+        proxy: true,
         resave: true,
-        saveUninitialized: false,
+        saveUninitialized: true,
         cookie: {
           maxAge: 300000
         }
       })
     );
-
-    this._app.use(function(req, res, next) {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
-      );
-      next();
-    });
+    this._app.use(passport.initialize());
+    this._app.use(passport.session());
   }
 
   Start() {
