@@ -51,8 +51,8 @@ class Server {
           maxAge: 300000,
           path: '/',
           httpOnly: false,
-          sameSite: false,
-          domain: 'https://webapi-oscar-client.herokuapp.com'
+          sameSite: true,
+          domain: 'https://webapi-oscar-server.herokuapp.com'
         }
       })
     );
