@@ -53,7 +53,7 @@ class Server {
   }
 
   Start() {
-    console.log('[Express Server] Listening port 5000.');
+    console.log('[Express Server] Listening port.');
     this._app.listen(process.env.port || 8899);
   }
 
