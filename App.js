@@ -52,7 +52,7 @@ class Server {
           path: '/',
           httpOnly: false,
           sameSite: false,
-          domain: 'https://webapi-oscar-server.herokuapp.com'
+          domain: 'https://webapi-oscar-client.herokuapp.com'
         }
       })
     );
