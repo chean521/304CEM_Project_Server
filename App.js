@@ -43,6 +43,7 @@ class Server {
         secret: 'abcde12345EFG!@',
         resave: false,
         saveUninitialized: false,
+        domain: 'https://webapi-oscar-server.herokuapp.com',
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
