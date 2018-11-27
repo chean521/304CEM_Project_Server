@@ -39,6 +39,7 @@ class Server {
     this._app.use(parser());
     this._app.use(
       session({
+        name: 'express_tmp_cookie',
         secret: 'abcde12345EFG!@',
         resave: false,
         saveUninitialized: false,
