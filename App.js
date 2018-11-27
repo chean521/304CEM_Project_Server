@@ -1,10 +1,11 @@
 const Express = require('express');
 const cors = require('cors');
 const passport = require('passport');
+var session = require('express-session');
+var MemCached = require('connect-memcached')(session);
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
-var session = require('express-session');
 var SessMgr = require('./component/SessionMgr');
 var PkgInfo = require('./package.json');
 
@@ -41,7 +42,11 @@ class Server {
         saveUninitialized: true,
         cookie: {
           maxAge: 300000
-        }
+        },
+        store: new MemCached({
+          hosts: ['127.0.0.1'],
+          secret: 'test session 123!'
+        })
       })
     );
     this._app.use(passport.initialize());
