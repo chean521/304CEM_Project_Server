@@ -40,7 +40,7 @@ class Server {
         }
       })
     );
-    /*
+
     this._app.use(function(req, res, next) {
       res.header('Access-Control-Allow-Origin', '*');
       res.header(
@@ -49,7 +49,6 @@ class Server {
       );
       next();
     });
-    */
   }
 
   Start() {
