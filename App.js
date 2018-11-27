@@ -42,14 +42,17 @@ class Server {
         name: 'express_tmp_cookie',
         secret: 'abcde12345EFG!@',
         resave: true,
-        saveUninitialized: true,
-        domain: 'https://webapi-oscar-server.herokuapp.com',
+        saveUninitialized: false,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
         }),
         cookie: {
-          maxAge: 300000
+          maxAge: 300000,
+          path: '/',
+          httpOnly: false,
+          sameSite: false,
+          domain: 'https://webapi-oscar-server.herokuapp.com'
         }
       })
     );
