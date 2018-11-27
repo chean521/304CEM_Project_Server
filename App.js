@@ -3,6 +3,7 @@ const cors = require('cors');
 const passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+const parser = require('cookie-parser');
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
@@ -35,11 +36,12 @@ class Server {
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
     this._app.use(cors());
+    this._app.use(parser());
     this._app.use(
       session({
         secret: '123abc',
         resave: false,
-        saveUninitialized: false,
+        saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           ttl: 600000,
