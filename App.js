@@ -41,8 +41,8 @@ class Server {
       session({
         name: 'express_tmp_cookie',
         secret: 'abcde12345EFG!@',
-        resave: false,
-        saveUninitialized: false,
+        resave: true,
+        saveUninitialized: true,
         domain: 'https://webapi-oscar-server.herokuapp.com',
         store: new MongoStore({
           mongooseConnection: Connector.connection,
