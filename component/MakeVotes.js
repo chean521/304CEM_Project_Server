@@ -109,14 +109,11 @@ router.get('/ValidateTicket', (req, res) => {
                     } else {
                       results.Expired = false;
 
-                      if (
-                        !(ticket.vote_date == null) &&
-                        !(ticket.vote_date == '')
-                      ) {
-                        results.Voted = true;
+                      if (ticket.vote_date == null || ticket.vote_date == '') {
+                        results.Voted = false;
                         res.status(200).json(results);
                       } else {
-                        results.Voted = false;
+                        results.Voted = true;
                         res.status(200).json(results);
                       }
                     }
