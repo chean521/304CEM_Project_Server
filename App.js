@@ -64,6 +64,9 @@ class Server {
     this._app.use('/MakeVote', TicketValid);
     this._app.use('/AdminMgr', Admins);
     this._app.use('/SessMgr', SessMgr);
+    this._app.get('/', (req, res) => {
+      res.end();
+    });
   }
 }
 
