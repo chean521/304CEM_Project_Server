@@ -48,10 +48,8 @@ class Server {
         }),
         cookie: {
           maxAge: 300000,
-          path: '/',
-          httpOnly: false,
-          sameSite: true,
-          domain: 'https://webapi-oscar-server.herokuapp.com'
+          httpOnly: true,
+          secure: true
         }
       })
     );
