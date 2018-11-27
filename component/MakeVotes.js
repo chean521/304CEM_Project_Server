@@ -105,7 +105,14 @@ router.get('/ValidateTicket', (req, res) => {
 
                     if (TodayDate.diff(EndDate, 'days') > 0) {
                       results.Expired = true;
-                      res.status(200).json(results);
+
+                      if (ticket.vote_date == null || ticket.vote_date == '') {
+                        results.Voted = false;
+                        res.status(200).json(results);
+                      } else {
+                        results.Voted = true;
+                        res.status(200).json(results);
+                      }
                     } else {
                       results.Expired = false;
 
