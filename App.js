@@ -3,7 +3,6 @@ const cors = require('cors');
 const passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-const CookieSess = require('cookie-session');
 const parser = require('cookie-parser');
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
@@ -39,19 +38,6 @@ class Server {
     this._app.use(cors());
     this._app.use(parser());
     this._app.use(
-      CookieSess({
-        name: 'express_tmp_cookie',
-        secret: 'abcde12345EFG!@'
-      })
-    );
-    this._app.use((req, res, next) => {
-      req.sessionOptions.maxAge = 300000;
-      req.sessionOptions.domain = 'https://webapi-oscar-client.herokuapp.com';
-      next();
-    });
-
-    /*
-    this._app.use(
       session({
         name: 'express_tmp_cookie',
         secret: 'abcde12345EFG!@',
@@ -70,8 +56,6 @@ class Server {
         }
       })
     );
-    */
-
     this._app.use(passport.initialize());
     this._app.use(passport.session());
   }
