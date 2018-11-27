@@ -39,7 +39,7 @@ class Server {
     this._app.use(parser());
     this._app.use(
       session({
-        secret: process.env.SECRET_KEY,
+        secret: 'abcde12345EFG!@',
         resave: false,
         saveUninitialized: false,
         store: new MongoStore({
