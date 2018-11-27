@@ -1,6 +1,6 @@
 {
   "name": "webapi_server",
-  "version": "1.0.0 [Beta Testing]",
+  "version": "1.0.0",
   "description": "Server API Manager for Voting Modules.",
   "main": "App.js",
   "scripts": {
