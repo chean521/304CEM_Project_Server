@@ -38,6 +38,7 @@ class Server {
     this._app.set('trust proxy', 1);
     this._app.use(cors());
     this._app.use(parser());
+
     this._app.use(
       session({
         name: 'connect.sid',
@@ -51,21 +52,11 @@ class Server {
         cookie: {
           maxAge: 300000,
           httpOnly: true,
-          secure: true
+          secure: true,
+          domain: '.herokuapp.com'
         }
       })
     );
-
-    this._app.use(function(req, res, next) {
-      res.header('Access-Control-Allow-Credentials', true);
-      res.header('Access-Control-Allow-Origin', req.headers.origin);
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      res.header(
-        'Access-Control-Allow-Headers',
-        'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-      );
-      next();
-    });
   }
 
   Start() {
