@@ -6,8 +6,6 @@ var session = require('express-session');
 var SessMgr = require('./component/SessionMgr');
 var PkgInfo = require('./package.json');
 
-const port = process.env.port || 5000;
-
 class Server {
   constructor() {
     const ServerHeader =
@@ -56,7 +54,7 @@ class Server {
 
   Start() {
     console.log('[Express Server] Listening port 5000.');
-    this._app.listen(port);
+    this._app.listen(process.env.port || 8899);
   }
 
   Listen() {
