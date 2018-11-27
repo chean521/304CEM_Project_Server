@@ -47,6 +47,7 @@ class Server {
     this._app.use((req, res, next) => {
       req.sessionOptions.maxAge = 300000;
       req.sessionOptions.domain = 'https://webapi-oscar-client.herokuapp.com';
+      next();
     });
 
     /*
