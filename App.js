@@ -39,6 +39,7 @@ class Server {
     this._app.use(parser());
     this._app.use(
       session({
+        name: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: true,
         saveUninitialized: false,
