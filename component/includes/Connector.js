@@ -13,7 +13,7 @@ console.log(
 
 Mongoose.connect(
   Con_Str,
-  { useNewUrlParser: true, useMongoClient: true }
+  { useNewUrlParser: true }
 )
   .then(() => {
     console.log(

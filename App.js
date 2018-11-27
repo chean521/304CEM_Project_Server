@@ -39,14 +39,16 @@ class Server {
     this._app.use(parser());
     this._app.use(
       session({
-        secret: '123abc',
+        secret: process.env.SECRET_KEY,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
-          ttl: 600000,
           autoRemove: 'native'
-        })
+        }),
+        cookie: {
+          maxAge: 300000
+        }
       })
     );
     this._app.use(passport.initialize());
