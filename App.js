@@ -2,10 +2,11 @@ const Express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 var session = require('express-session');
-var MemCached = require('connect-memcached')(session);
+var MongoStore = require('connect-mongo')(session);
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
+const Connector = require('./component/includes/Connector');
 var SessMgr = require('./component/SessionMgr');
 var PkgInfo = require('./package.json');
 
@@ -37,15 +38,10 @@ class Server {
     this._app.use(
       session({
         secret: '123abc',
-        proxy: true,
-        resave: true,
-        saveUninitialized: true,
-        cookie: {
-          maxAge: 300000
-        },
-        store: new MemCached({
-          hosts: ['127.0.0.1'],
-          secret: 'test session 123!'
+        store: new MongoStore({
+          mongooseConnection: Connector.connection,
+          ttl: 600000,
+          autoRemove: 'native'
         })
       })
     );
