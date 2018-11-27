@@ -22,14 +22,13 @@ router.get('/', (req, res) => {
         ' minute(s)'
     );
     req.session.data = [];
-    req.session.save();
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
     );
   }
 
-  res.end();
+  res.send(200);
 });
 
 router.get('/AddKey', (req, res) => {
