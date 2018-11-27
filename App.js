@@ -1,6 +1,7 @@
+'use strict';
+
 const Express = require('express');
 const cors = require('cors');
-const passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 const parser = require('cookie-parser');
@@ -54,8 +55,17 @@ class Server {
         }
       })
     );
-    this._app.use(passport.initialize());
-    this._app.use(passport.session());
+
+    this._app.use(function(req, res, next) {
+      res.header('Access-Control-Allow-Credentials', true);
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+      res.header(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+      );
+      next();
+    });
   }
 
   Start() {
