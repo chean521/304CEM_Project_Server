@@ -33,7 +33,6 @@ class Server {
       '\n';
     console.log(ServerHeader);
     this._app = Express();
-    this._app.use(Express.static);
     this._app.use(Express.json());
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
