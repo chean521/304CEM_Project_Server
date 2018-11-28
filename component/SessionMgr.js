@@ -12,16 +12,10 @@ router.use(function timeLog(req, res, next) {
 router.get('/', (req, res) => {
   if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
-    req.session.regenerate(err => {});
     req.session.initialize = 'is_initialize';
     console.log(
       '[Express Server - Session Manager] Register Session. ID: ' +
         req.session.id
-    );
-    console.log(
-      '[Express Server - Session Manager] Max active session time: ' +
-        req.session.cookie.maxAge / 1000 / 60 +
-        ' minute(s)'
     );
 
     req.session.save(err => {
