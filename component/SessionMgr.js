@@ -9,9 +9,10 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
+    req.session.regenerate(err => {});
     console.log(
       '[Express Server - Session Manager] Register Session. ID: ' +
         req.session.id
@@ -23,19 +24,16 @@ router.get('/', (req, res) => {
     );
 
     req.session.initialize = 'is_initialize';
-    req.session.save(err => {
-      if (err) console.log(err);
-    });
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
     );
   }
 
-  res.end();
+  return next();
 });
 
-router.get('/AddKey', (req, res) => {
+router.get('/AddKey', (req, res, next) => {
   console.log('[Express Server - Session Manager] Adding new session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -67,17 +65,15 @@ router.get('/AddKey', (req, res) => {
         );
       } else {
         req.session[S_key] = S_Val;
-        req.session.save(err => {});
         console.log('[Express Server - Session Manager] Session data added.');
       }
     }
   }
 
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.end();
+  return next();
 });
 
-router.get('/ModVal', (req, res) => {
+router.get('/ModVal', (req, res, next) => {
   console.log('[Express Server - Session Manager] Modifying session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -99,7 +95,6 @@ router.get('/ModVal', (req, res) => {
       for (var key in req.session) {
         if (S_key == key) {
           req.session[S_Key] = S_Val;
-          req.session.save(err => {});
           exist = true;
           break;
         }
@@ -115,7 +110,7 @@ router.get('/ModVal', (req, res) => {
     }
   }
 
-  res.end();
+  return next();
 });
 
 router.get('/GetVal', (req, res) => {
@@ -152,7 +147,7 @@ router.get('/GetVal', (req, res) => {
   }
 });
 
-router.get('/DelKey', (req, res) => {
+router.get('/DelKey', (req, res, next) => {
   console.log('[Express Server - Session Manager] Delete session data.');
   if (typeof req.query.SessKey === 'undefined') {
     console.log(
@@ -189,7 +184,7 @@ router.get('/DelKey', (req, res) => {
     }
   }
 
-  res.end();
+  return next();
 });
 
 router.get('/Destroy', (req, res) => {

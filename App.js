@@ -49,7 +49,7 @@ class Server {
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: true,
-        saveUninitialized: false,
+        saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
