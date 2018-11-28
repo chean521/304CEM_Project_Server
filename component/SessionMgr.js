@@ -4,7 +4,7 @@ var MongoStore = require('connect-mongo')(session);
 const Connector = require('./includes/Connector');
 var router = express.Router();
 
-this._SESS = session({
+var _SESS = session({
   key: 'connect.sid',
   secret: 'abcde12345EFG!@',
   resave: true,
