@@ -38,6 +38,13 @@ class Server {
     this._app.set('trust proxy', 1);
     this._app.use(parser());
     this._app.use(
+      cors({
+        origin: true,
+        credentials: true,
+        optionsSuccessStatus: 200
+      })
+    );
+    this._app.use(
       session({
         name: 'connect.sid',
         secret: 'abcde12345EFG!@',
@@ -64,16 +71,10 @@ class Server {
   }
 
   Listen() {
-    var cors_setting = {
-      origin: true,
-      credentials: true,
-      optionsSuccessStatus: 200
-    };
-
-    this._app.use('/VoteResult', cors(), Result);
-    this._app.use('/MakeVote', cors(), TicketValid);
-    this._app.use('/AdminMgr', cors(cors_setting), Admins);
-    this._app.use('/SessMgr', cors(cors_setting), SessMgr);
+    this._app.use('/VoteResult', Result);
+    this._app.use('/MakeVote', TicketValid);
+    this._app.use('/AdminMgr', Admins);
+    this._app.use('/SessMgr', SessMgr);
     this._app.get('/', (req, res) => {
       res.end();
     });
