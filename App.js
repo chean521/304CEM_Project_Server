@@ -58,6 +58,8 @@ class Server {
         maxAge: 300000
       }
     });
+
+    this._app.use(this._app.router);
   }
 
   Start() {
