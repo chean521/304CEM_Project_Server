@@ -10,7 +10,7 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/', (req, res) => {
-  if (typeof req.session.value === 'undefined') {
+  if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
     req.session.regenerate(err => {});
     console.log(
@@ -23,14 +23,13 @@ router.get('/', (req, res) => {
         ' minute(s)'
     );
 
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     req.session.initialize = 'is_initialize';
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
     );
   }
-
-  res.status(200).send();
 });
 
 router.get('/AddKey', (req, res) => {
