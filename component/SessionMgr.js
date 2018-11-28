@@ -45,7 +45,7 @@ router.get('/AddKey', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to add session data.'
     );
   } else {
-    if (!(req.session.initialize === 'is_initialize')) {
+    if (typeof req.session.initialize === 'undefined') {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to add session data."
       );
@@ -88,7 +88,7 @@ router.get('/ModVal', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to modify session data.'
     );
   } else {
-    if (!(req.session.initialize === 'is_initialize')) {
+    if (typeof req.session.initialize === 'undefined') {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to modify session data."
       );
@@ -128,7 +128,7 @@ router.get('/GetVal', (req, res) => {
     );
     res.end();
   } else {
-    if (!(req.session.initialize === 'is_initialize')) {
+    if (typeof req.session.initialize === 'undefined') {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to get session data."
       );
@@ -162,7 +162,7 @@ router.get('/DelKey', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to delete session data.'
     );
   } else {
-    if (!(req.session.initialize === 'is_initialize')) {
+    if (typeof req.session.initialize === 'undefined') {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to get session data."
       );
@@ -197,7 +197,7 @@ router.get('/DelKey', (req, res) => {
 
 router.get('/Destroy', (req, res) => {
   console.log('[Express Server - Session Manager] Destroy session.');
-  if (typeof req.session.data === 'undefined') {
+  if (typeof req.session.initialize === 'undefined') {
     console.log(
       "[Express Server - Session Manager] Session haven't initialize, unable to destroy session."
     );
