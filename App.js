@@ -33,6 +33,7 @@ class Server {
       '\n';
     console.log(ServerHeader);
     this._app = Express();
+    this._app.use(Express.static);
     this._app.use(Express.json());
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
@@ -49,7 +50,7 @@ class Server {
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: false,
-        path: '/SessMgr',
+        path: '/',
         saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
