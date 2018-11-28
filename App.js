@@ -49,7 +49,7 @@ class Server {
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: false,
-        path: '/',
+        path: '/SessMgr',
         saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
