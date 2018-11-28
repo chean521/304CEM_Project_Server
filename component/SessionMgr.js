@@ -24,6 +24,7 @@ router.get('/', (req, res, next) => {
     );
 
     req.session.initialize = 'is_initialize';
+    req.session.save(err => {});
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
@@ -65,6 +66,7 @@ router.get('/AddKey', (req, res, next) => {
         );
       } else {
         req.session[S_key] = S_Val;
+        req.session.save(err => {});
         console.log('[Express Server - Session Manager] Session data added.');
       }
     }
@@ -105,6 +107,7 @@ router.get('/ModVal', (req, res, next) => {
           '[Express Server - Session Manager] Unable to find provided key for modify.'
         );
       } else {
+        req.session.save(err => {});
         console.log('[Express Server - Session Manager] Session data edited.');
       }
     }
