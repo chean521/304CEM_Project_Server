@@ -65,11 +65,13 @@ router.get('/AddKey', (req, res) => {
         );
       } else {
         req.session[S_key] = S_Val;
+        req.session.save(err => {});
         console.log('[Express Server - Session Manager] Session data added.');
       }
     }
   }
 
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.end();
 });
 
