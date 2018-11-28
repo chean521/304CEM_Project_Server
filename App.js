@@ -37,7 +37,6 @@ class Server {
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
     this._app.use(parser());
-
     this._app.use(
       session({
         name: 'connect.sid',
@@ -57,16 +56,6 @@ class Server {
         }
       })
     );
-    this._app.use(function(req, res, next) {
-      res.header('Access-Control-Allow-Credentials', true);
-      res.header('Access-Control-Allow-Origin', req.headers.origin);
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      res.header(
-        'Access-Control-Allow-Headers',
-        'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
-      );
-      next();
-    });
   }
 
   Start() {
@@ -75,10 +64,14 @@ class Server {
   }
 
   Listen() {
-    this._app.use('/VoteResult', Result);
-    this._app.use('/MakeVote', TicketValid);
-    this._app.use('/AdminMgr', Admins);
-    this._app.use('/SessMgr', SessMgr);
+    cors_setting = {
+      origin: ['https://webapi-oscar-client.herokuapp.com']
+    };
+
+    this._app.use('/VoteResult', cors(), Result);
+    this._app.use('/MakeVote', cors(), TicketValid);
+    this._app.use('/AdminMgr', cors(cors_setting), Admins);
+    this._app.use('/SessMgr', cors(cors_setting), SessMgr);
     this._app.get('/', (req, res) => {
       res.end();
     });
