@@ -1,5 +1,24 @@
 var express = require('express');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+const Connector = require('./includes/Connector');
 var router = express.Router();
+
+router.use(
+  session({
+    key: 'connect.sid',
+    secret: 'abcde12345EFG!@',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongooseConnection: Connector.connection,
+      autoRemove: 'native'
+    }),
+    cookie: {
+      maxAge: 300000
+    }
+  })
+);
 
 router.use(function timeLog(req, res, next) {
   console.log(
