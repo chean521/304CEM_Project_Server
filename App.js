@@ -65,7 +65,9 @@ class Server {
 
   Listen() {
     var cors_setting = {
-      origin: ['https://webapi-oscar-client.herokuapp.com']
+      origin: true,
+      credentials: true,
+      optionsSuccessStatus: 200
     };
 
     this._app.use('/VoteResult', cors(), Result);
