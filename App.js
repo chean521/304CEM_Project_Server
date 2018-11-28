@@ -2,13 +2,10 @@
 
 const Express = require('express');
 const cors = require('cors');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
 const parser = require('cookie-parser');
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
-const Connector = require('./component/includes/Connector');
 var SessMgr = require('./component/SessionMgr');
 var PkgInfo = require('./package.json');
 
@@ -44,19 +41,6 @@ class Server {
         optionsSuccessStatus: 200
       })
     );
-    this._SESS = session({
-      key: 'connect.sid',
-      secret: 'abcde12345EFG!@',
-      resave: true,
-      saveUninitialized: false,
-      store: new MongoStore({
-        mongooseConnection: Connector.connection,
-        autoRemove: 'native'
-      }),
-      cookie: {
-        maxAge: 300000
-      }
-    });
   }
 
   Start() {
@@ -68,7 +52,7 @@ class Server {
     this._app.use('/VoteResult', Result);
     this._app.use('/MakeVote', TicketValid);
     this._app.use('/AdminMgr', Admins);
-    this._app.use('/SessMgr', this._SESS, SessMgr);
+    this._app.use('/SessMgr', SessMgr);
     this._app.get('/', (req, res) => {
       res.end();
     });
