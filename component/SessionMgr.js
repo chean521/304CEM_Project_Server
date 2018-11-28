@@ -9,11 +9,6 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-router.use((req, res, next) => {
-  req.session.reload();
-  next();
-});
-
 router.get('/', (req, res) => {
   if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
@@ -29,7 +24,9 @@ router.get('/', (req, res) => {
     );
 
     req.session.initialize = 'is_initialize';
-    req.session.save(err => {});
+    req.session.save(err => {
+      if (err) console.log(err);
+    });
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '

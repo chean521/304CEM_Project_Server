@@ -48,7 +48,7 @@ class Server {
       session({
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
-        resave: false,
+        resave: true,
         saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
