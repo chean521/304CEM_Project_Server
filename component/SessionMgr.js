@@ -24,13 +24,13 @@ router.get('/', (req, res) => {
     );
 
     req.session.value = [];
+    res.cookie('connect.sid', req.session.value, req.sessionOptions);
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
     );
   }
 
-  res.cookie('connect.sid', req.session.data, req.sessionOptions);
   res.status(200).send();
 });
 
