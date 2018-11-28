@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     );
   }
 
-  res.send();
+  res.status(200).send(req.session);
 });
 
 router.get('/AddKey', (req, res) => {
@@ -68,7 +68,7 @@ router.get('/AddKey', (req, res) => {
     }
   }
 
-  res.send();
+  res.status(200).send(req.session);
 });
 
 router.get('/ModVal', (req, res) => {
