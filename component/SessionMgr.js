@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 router.use(function timeLog(req, res, next) {
-  req.session.touch(e => {});
   console.log(
     '[Express Server - Session Manager] Session Manager Requests - Time: ',
     Date.now()
@@ -14,6 +13,7 @@ router.get('/', (req, res) => {
   if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
     req.session.regenerate(err => {});
+    req.session.initialize = 'is_initialize';
     console.log(
       '[Express Server - Session Manager] Register Session. ID: ' +
         req.session.id
@@ -24,8 +24,9 @@ router.get('/', (req, res) => {
         ' minute(s)'
     );
 
-    req.session.initialize = 'is_initialize';
-    req.session.save(err => {});
+    req.session.save(err => {
+      if (err) console.log(err);
+    });
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '

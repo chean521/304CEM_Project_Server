@@ -55,7 +55,7 @@ class Server {
           autoRemove: 'native'
         }),
         cookie: {
-          maxAge: 300000,
+          maxAge: null,
           path: '/',
           domain: 'webapi-oscar-server.herokuapp.com'
         }
