@@ -12,6 +12,7 @@ router.use(function timeLog(req, res, next) {
 router.get('/', (req, res) => {
   if (typeof req.session.value === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
+    req.session.regenerate(err => {});
     console.log(
       '[Express Server - Session Manager] Register Session. ID: ' +
         req.session.id

@@ -43,17 +43,17 @@ class Server {
       session({
         name: 'connect.sid',
         secret: 'abcde12345EFG!@',
-        resave: true,
-        saveUninitialized: false,
+        resave: false,
+        saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
         }),
         cookie: {
           maxAge: 300000,
+          path: '/',
           httpOnly: true,
-          secure: true,
-          domain: '.herokuapp.com'
+          secure: true
         }
       })
     );
