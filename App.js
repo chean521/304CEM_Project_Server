@@ -2,10 +2,13 @@
 
 const Express = require('express');
 const cors = require('cors');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 const parser = require('cookie-parser');
 const Result = require('./component/VoteResult');
 const TicketValid = require('./component/MakeVotes');
 const Admins = require('./component/Admins');
+const Connector = require('./component/includes/Connector');
 var SessMgr = require('./component/SessionMgr');
 var PkgInfo = require('./package.json');
 
@@ -39,6 +42,21 @@ class Server {
         origin: true,
         credentials: true,
         optionsSuccessStatus: 200
+      })
+    );
+    this._app.use(
+      session({
+        key: 'connect.sid',
+        secret: 'abcde12345EFG!@',
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({
+          mongooseConnection: Connector.connection,
+          autoRemove: 'native'
+        }),
+        cookie: {
+          maxAge: 300000
+        }
       })
     );
   }
