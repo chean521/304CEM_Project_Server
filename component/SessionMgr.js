@@ -30,6 +30,8 @@ router.get('/', (req, res) => {
       '[Express Server - Session Manager] Session already initialize. '
     );
   }
+
+  res.end();
 });
 
 router.get('/AddKey', (req, res) => {
