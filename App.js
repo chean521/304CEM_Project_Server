@@ -46,7 +46,7 @@ class Server {
     );
     this._app.use(
       session({
-        name: 'connect.sid',
+        key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: false,
         saveUninitialized: true,
