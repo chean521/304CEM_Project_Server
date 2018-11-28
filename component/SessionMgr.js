@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     req.session.initialize = 'is_initialize';
+    req.session.save(err => {});
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
