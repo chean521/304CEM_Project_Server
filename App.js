@@ -44,21 +44,19 @@ class Server {
         optionsSuccessStatus: 200
       })
     );
-    this._app.use(
-      session({
-        key: 'connect.sid',
-        secret: 'abcde12345EFG!@',
-        resave: true,
-        saveUninitialized: true,
-        store: new MongoStore({
-          mongooseConnection: Connector.connection,
-          autoRemove: 'native'
-        }),
-        cookie: {
-          maxAge: 300000
-        }
-      })
-    );
+    this.sess = session({
+      key: 'connect.sid',
+      secret: 'abcde12345EFG',
+      resave: true,
+      saveUninitialized: true,
+      store: new MongoStore({
+        mongooseConnection: Connector.connection,
+        autoRemove: 'native'
+      }),
+      cookie: {
+        maxAge: 300000
+      }
+    });
   }
 
   Start() {
@@ -70,7 +68,7 @@ class Server {
     this._app.use('/VoteResult', Result);
     this._app.use('/MakeVote', TicketValid);
     this._app.use('/AdminMgr', Admins);
-    this._app.use('/SessMgr', SessMgr);
+    this._app.use('/SessMgr', this.sess, SessMgr);
     this._app.get('/', (req, res) => {
       res.end();
     });

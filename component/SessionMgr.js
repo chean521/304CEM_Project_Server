@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
     );
   }
 
-  res.status(200).send(req);
+  res.send();
 });
 
 router.get('/AddKey', (req, res) => {
@@ -68,7 +68,7 @@ router.get('/AddKey', (req, res) => {
     }
   }
 
-  res.status(200).send(req);
+  res.send();
 });
 
 router.get('/ModVal', (req, res) => {
