@@ -49,7 +49,7 @@ class Server {
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: false,
-        domain: 'webapi-oscar-client.herokuapp.com',
+        domain: 'webapi-oscar-server.herokuapp.com',
         path: '/',
         saveUninitialized: true,
         store: new MongoStore({
