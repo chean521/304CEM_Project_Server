@@ -31,8 +31,10 @@ router.get('/ValidAdmin', (req, res) => {
       .sort({ _id: -1 })
       .then(response => {
         if (response.length > 0) {
+          res.cookie('isAuthenticated', true, { maxAge: 300000 });
           res.status(200).json({ res: true });
         } else {
+          res.cookie('isAuthenticated', false, { maxAge: 300000 });
           res.status(200).json({ res: false });
         }
 
