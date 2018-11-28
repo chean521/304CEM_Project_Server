@@ -46,6 +46,7 @@ router.get('/AddKey', (req, res) => {
     );
   } else {
     if (typeof req.session.initialize === 'undefined') {
+      console.log(req.session.initialize);
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to add session data."
       );
