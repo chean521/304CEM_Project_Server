@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
         req.session.cookie.maxAge / 1000 / 60 +
         ' minute(s)'
     );
+
     req.session.value = [];
   } else {
     console.log(
@@ -29,6 +30,7 @@ router.get('/', (req, res) => {
     );
   }
 
+  res.cookie('connect.sid', req.session.data, req.sessionOptions);
   res.status(200).send();
 });
 
