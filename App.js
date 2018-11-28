@@ -55,8 +55,7 @@ class Server {
           autoRemove: 'native'
         }),
         cookie: {
-          maxAge: 300000,
-          sameSite: true
+          maxAge: 300000
         }
       })
     );
