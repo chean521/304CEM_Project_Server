@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.use(function timeLog(req, res, next) {
+  req.session.touch(e => {});
   console.log(
     '[Express Server - Session Manager] Session Manager Requests - Time: ',
     Date.now()
