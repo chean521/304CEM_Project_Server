@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
     );
   }
 
-  res.end();
+  res.send();
 });
 
 router.get('/AddKey', (req, res) => {
@@ -74,7 +74,7 @@ router.get('/AddKey', (req, res) => {
     }
   }
 
-  res.end();
+  res.send();
 });
 
 router.get('/ModVal', (req, res) => {
@@ -115,7 +115,7 @@ router.get('/ModVal', (req, res) => {
     }
   }
 
-  res.end();
+  res.send();
 });
 
 router.get('/GetVal', (req, res) => {
@@ -189,7 +189,7 @@ router.get('/DelKey', (req, res) => {
     }
   }
 
-  res.end();
+  res.send();
 });
 
 router.get('/Destroy', (req, res) => {
@@ -204,7 +204,7 @@ router.get('/Destroy', (req, res) => {
     });
   }
 
-  res.end();
+  res.send();
 });
 
 module.exports = router;

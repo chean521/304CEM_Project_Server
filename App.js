@@ -48,8 +48,8 @@ class Server {
       session({
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
-        resave: true,
-        saveUninitialized: false,
+        resave: false,
+        saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
@@ -57,7 +57,7 @@ class Server {
         cookie: {
           maxAge: null,
           path: '/',
-          domain: 'webapi-oscar-server.herokuapp.com'
+          secure: this._app.get('env') === 'production'
         }
       })
     );
