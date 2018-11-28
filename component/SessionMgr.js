@@ -35,6 +35,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/AddKey', (req, res) => {
+  req.session.reload(err => {});
   console.log('[Express Server - Session Manager] Adding new session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -77,6 +78,7 @@ router.get('/AddKey', (req, res) => {
 });
 
 router.get('/ModVal', (req, res) => {
+  req.session.reload(err => {});
   console.log('[Express Server - Session Manager] Modifying session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -98,6 +100,7 @@ router.get('/ModVal', (req, res) => {
       for (var key in req.session) {
         if (S_key == key) {
           req.session[S_Key] = S_Val;
+          req.session.save(err => {});
           exist = true;
           break;
         }
@@ -117,6 +120,7 @@ router.get('/ModVal', (req, res) => {
 });
 
 router.get('/GetVal', (req, res) => {
+  req.session.reload(err => {});
   console.log('[Express Server - Session Manager] Get session data.');
   if (typeof req.query.SessKey === 'undefined') {
     console.log(
@@ -151,6 +155,7 @@ router.get('/GetVal', (req, res) => {
 });
 
 router.get('/DelKey', (req, res) => {
+  req.session.reload(err => {});
   console.log('[Express Server - Session Manager] Delete session data.');
   if (typeof req.query.SessKey === 'undefined') {
     console.log(
@@ -176,6 +181,7 @@ router.get('/DelKey', (req, res) => {
 
       if (isFound == true) {
         req.session[pos] = undefined;
+        req.session.save(err => {});
 
         console.log('[Express Server - Session Manager] Session data deleted.');
       } else {
