@@ -23,8 +23,7 @@ router.get('/', (req, res) => {
         ' minute(s)'
     );
 
-    req.session.value = [];
-    res.cookie('connect.sid', req.session.id, req.sessionOptions);
+    req.session.initialize = 'is_initialize';
   } else {
     console.log(
       '[Express Server - Session Manager] Session already initialize. '
@@ -44,7 +43,7 @@ router.get('/AddKey', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to add session data.'
     );
   } else {
-    if (typeof req.session.value === 'undefined') {
+    if (!(req.session.initialize === 'is_initialize')) {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to add session data."
       );
@@ -53,8 +52,8 @@ router.get('/AddKey', (req, res) => {
       var S_Val = String(req.query.SessVal);
       var exist = false;
 
-      for (var i = 0; i < req.session.value.length; i++) {
-        if (S_key == req.session.value[i].key) {
+      for (var key in req.session) {
+        if (S_key == key) {
           exist = true;
           break;
         }
@@ -65,7 +64,7 @@ router.get('/AddKey', (req, res) => {
           '[Express Server - Session Manager] Session key exist, unable to add new data.'
         );
       } else {
-        req.session.value.push({ key: S_key, val: S_Val });
+        req.session[S_key] = S_Val;
         console.log('[Express Server - Session Manager] Session data added.');
       }
     }
@@ -84,7 +83,7 @@ router.get('/ModVal', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to modify session data.'
     );
   } else {
-    if (typeof req.session.value === 'undefined') {
+    if (!(req.session.initialize === 'is_initialize')) {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to modify session data."
       );
@@ -93,9 +92,9 @@ router.get('/ModVal', (req, res) => {
       var S_Val = String(req.query.SessVal);
       var exist = false;
 
-      for (var i = 0; i < req.session.data.length; i++) {
-        if (S_key == req.session.value[i].key) {
-          req.session.value[i].val = S_Val;
+      for (var key in req.session) {
+        if (S_key == key) {
+          req.session[S_Key] = S_Val;
           exist = true;
           break;
         }
@@ -122,23 +121,22 @@ router.get('/GetVal', (req, res) => {
     );
     res.end();
   } else {
-    if (typeof req.session.value === 'undefined') {
+    if (!(req.session.initialize === 'is_initialize')) {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to get session data."
       );
       res.end();
     } else {
       var S_key = String(req.query.SessKey);
-      var sess_data = req.session.value;
       var result = {
         req_key: S_key,
         sess_key: req.session.id,
         data: null
       };
 
-      for (var i = 0; i < sess_data.length; i++) {
-        if (sess_data[i].key == S_key) {
-          result.data = sess_data[i].val;
+      for (var key in req.session) {
+        if (key == S_key) {
+          result.data = req.session[key];
           break;
         }
       }
@@ -156,26 +154,25 @@ router.get('/DelKey', (req, res) => {
       '[Express Server - Session Manager] Required parameters not found, unable to delete session data.'
     );
   } else {
-    if (typeof req.session.value === 'undefined') {
+    if (!(req.session.initialize === 'is_initialize')) {
       console.log(
         "[Express Server - Session Manager] Session haven't initialize, unable to get session data."
       );
     } else {
       var S_key = String(req.query.SessKey);
-      var sess_data = req.session.value;
-      var pos = 0;
       var isFound = false;
+      var pos = '';
 
-      for (var i = 0; i < sess_data.length; i++) {
-        if (sess_data[i].key == S_key) {
-          pos = i;
+      for (var key in req.session) {
+        if (key == S_key) {
+          pos = key;
           isFound = true;
           break;
         }
       }
 
       if (isFound == true) {
-        req.session.value.splice(pos, 1);
+        req.session[pos] = undefined;
 
         console.log('[Express Server - Session Manager] Session data deleted.');
       } else {

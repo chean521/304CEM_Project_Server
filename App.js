@@ -49,15 +49,15 @@ class Server {
         key: 'connect.sid',
         secret: 'abcde12345EFG!@',
         resave: false,
+        domain: 'webapi-oscar-client.herokuapp.com',
+        path: '/',
         saveUninitialized: true,
         store: new MongoStore({
           mongooseConnection: Connector.connection,
           autoRemove: 'native'
         }),
         cookie: {
-          domain: 'webapi-oscar-client.herokuapp.com',
           maxAge: 300000,
-          path: '/',
           httpOnly: true,
           secure: true
         }
