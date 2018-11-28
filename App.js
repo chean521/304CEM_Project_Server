@@ -64,7 +64,7 @@ class Server {
   }
 
   Listen() {
-    cors_setting = {
+    var cors_setting = {
       origin: ['https://webapi-oscar-client.herokuapp.com']
     };
 
