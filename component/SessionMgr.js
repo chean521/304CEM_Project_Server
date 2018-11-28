@@ -4,21 +4,19 @@ var MongoStore = require('connect-mongo')(session);
 const Connector = require('./includes/Connector');
 var router = express.Router();
 
-router.use(
-  session({
-    key: 'connect.sid',
-    secret: 'abcde12345EFG!@',
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({
-      mongooseConnection: Connector.connection,
-      autoRemove: 'native'
-    }),
-    cookie: {
-      maxAge: 300000
-    }
-  })
-);
+var _Sess = session({
+  key: 'connect.sid',
+  secret: 'abcde12345EFG!@',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({
+    mongooseConnection: Connector.connection,
+    autoRemove: 'native'
+  }),
+  cookie: {
+    maxAge: 300000
+  }
+});
 
 router.use(function timeLog(req, res, next) {
   console.log(
@@ -28,10 +26,9 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-router.get('/', (req, res) => {
+router.get('/', _Sess, (req, res) => {
   if (typeof req.session.initialize === 'undefined') {
     console.log('[Express Server - Session Manager] Initialize Session');
-    req.session.regenerate(err => {});
     console.log(
       '[Express Server - Session Manager] Register Session. ID: ' +
         req.session.id
@@ -55,7 +52,7 @@ router.get('/', (req, res) => {
   res.end();
 });
 
-router.get('/AddKey', (req, res) => {
+router.get('/AddKey', _Sess, (req, res) => {
   console.log('[Express Server - Session Manager] Adding new session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -97,7 +94,7 @@ router.get('/AddKey', (req, res) => {
   res.end();
 });
 
-router.get('/ModVal', (req, res) => {
+router.get('/ModVal', _Sess, (req, res) => {
   console.log('[Express Server - Session Manager] Modifying session data.');
   if (
     typeof req.query.SessKey === 'undefined' ||
@@ -138,7 +135,7 @@ router.get('/ModVal', (req, res) => {
   res.end();
 });
 
-router.get('/GetVal', (req, res) => {
+router.get('/GetVal', _Sess, (req, res) => {
   console.log('[Express Server - Session Manager] Get session data.');
   if (typeof req.query.SessKey === 'undefined') {
     console.log(
@@ -172,7 +169,7 @@ router.get('/GetVal', (req, res) => {
   }
 });
 
-router.get('/DelKey', (req, res) => {
+router.get('/DelKey', _Sess, (req, res) => {
   console.log('[Express Server - Session Manager] Delete session data.');
   if (typeof req.query.SessKey === 'undefined') {
     console.log(
@@ -212,7 +209,7 @@ router.get('/DelKey', (req, res) => {
   res.end();
 });
 
-router.get('/Destroy', (req, res) => {
+router.get('/Destroy', _Sess, (req, res) => {
   console.log('[Express Server - Session Manager] Destroy session.');
   if (typeof req.session.initialize === 'undefined') {
     console.log(
