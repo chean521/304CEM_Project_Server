@@ -36,7 +36,6 @@ class Server {
     this._app.use(Express.json());
     this._app.use(Express.urlencoded({ extended: true }));
     this._app.set('trust proxy', 1);
-    this._app.use(cors());
     this._app.use(parser());
 
     this._app.use(
