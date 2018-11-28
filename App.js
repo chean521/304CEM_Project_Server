@@ -55,7 +55,7 @@ class Server {
           autoRemove: 'native'
         }),
         cookie: {
-          secure: this._app.get('env') === 'production'
+          maxAge: 300000
         }
       })
     );
